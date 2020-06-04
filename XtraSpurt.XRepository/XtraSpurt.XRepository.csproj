@@ -2,10 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageProjectUrl>https://github.com/XtraSpurt/XRepository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/XtraSpurt/XRepository</RepositoryUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Company>XtraSpurt</Company>
+    <Product>XRepository</Product>
+    <Authors>Tarek Lejmi</Authors>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Copyright>XtraSpurt</Copyright>
+    <Description>Repository Pattern &amp; UnitOfWork Pattern Implementation</Description>
   </PropertyGroup>
 
   <ItemGroup>
+  <PackageReference Include="AutoMapper" Version="9.0.0" />
   <PackageReference Include="EFCore.BulkExtensions" Version="3.1.1" />
+  <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
   <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.50" />
 
   </ItemGroup>

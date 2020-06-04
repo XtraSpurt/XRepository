@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace XtraSpurt.XRepository
 {
-    public static class IQueryableExtensions
+    public static class XIQueryableExtensions
     {
         private static readonly MethodInfo OrderByMethod =
             typeof(Queryable).GetMethods().Single(method =>
@@ -82,11 +82,7 @@ namespace XtraSpurt.XRepository
             var paramterExpression = Expression.Parameter(typeof(T));
             Expression orderByProperty = Expression.Property(paramterExpression, propertyName);
             var lambda = Expression.Lambda(orderByProperty, paramterExpression);
-            MethodInfo genericMethod;
-            if (source.Expression.Type == typeof(IOrderedQueryable<T>))
-                genericMethod = ThenByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
-            else
-                genericMethod = OrderByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
+            var genericMethod = source.Expression.Type == typeof(IOrderedQueryable<T>) ? ThenByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type) : OrderByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
 
             var ret = genericMethod.Invoke(null, new object[] { source, lambda });
             return (IOrderedQueryable<T>)ret;
@@ -108,11 +104,7 @@ namespace XtraSpurt.XRepository
             var paramterExpression = Expression.Parameter(typeof(T));
             Expression orderByProperty = Expression.Property(paramterExpression, propertyName);
             var lambda = Expression.Lambda(orderByProperty, paramterExpression);
-            MethodInfo genericMethod;
-            if (source.Expression.Type == typeof(IOrderedQueryable<T>))
-                genericMethod = ThenByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
-            else
-                genericMethod = OrderByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
+            var genericMethod = source.Expression.Type == typeof(IOrderedQueryable<T>) ? ThenByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type) : OrderByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
 
             var ret = genericMethod.Invoke(null, new object[] { source, lambda });
             return (IOrderedQueryable<T>)ret;

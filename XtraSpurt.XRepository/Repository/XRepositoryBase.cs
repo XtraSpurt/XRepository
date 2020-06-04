@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Z.EntityFramework.Plus;
 
-namespace XtraSpurt.XRepository
+namespace XtraSpurt.XRepository.Repository
 {
     public class XRepositoryBase<TEntity> : IXRepositoryBase<TEntity> where TEntity : class
     {
