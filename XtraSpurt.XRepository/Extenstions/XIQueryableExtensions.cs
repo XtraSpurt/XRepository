@@ -9,19 +9,19 @@ namespace XtraSpurt.XRepository
     {
         private static readonly MethodInfo OrderByMethod =
             typeof(Queryable).GetMethods().Single(method =>
-                method.Name == "OrderBy" && method.GetParameters().Length == 2);
+                string.Equals(method.Name, "OrderBy", StringComparison.Ordinal) && method.GetParameters().Length == 2);
 
         private static readonly MethodInfo OrderByDescendingMethod =
             typeof(Queryable).GetMethods().Single(method =>
-                method.Name == "OrderByDescending" && method.GetParameters().Length == 2);
+                string.Equals(method.Name, "OrderByDescending", StringComparison.Ordinal) && method.GetParameters().Length == 2);
 
         private static readonly MethodInfo ThenByMethod =
             typeof(Queryable).GetMethods().Single(method =>
-                method.Name == "ThenBy" && method.GetParameters().Length == 2);
+                string.Equals(method.Name, "ThenBy", StringComparison.Ordinal) && method.GetParameters().Length == 2);
 
         private static readonly MethodInfo ThenByDescendingMethod =
             typeof(Queryable).GetMethods().Single(method =>
-                method.Name == "ThenByDescending" && method.GetParameters().Length == 2);
+                string.Equals(method.Name, "ThenByDescending", StringComparison.Ordinal) && method.GetParameters().Length == 2);
 
         /// <summary>
         ///     Check if the property exists.
@@ -63,7 +63,7 @@ namespace XtraSpurt.XRepository
                 }
             }
 
-            return (IOrderedQueryable<T>)result;
+            return result as IOrderedQueryable<T>;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace XtraSpurt.XRepository
             var genericMethod = source.Expression.Type == typeof(IOrderedQueryable<T>) ? ThenByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type) : OrderByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
 
             var ret = genericMethod.Invoke(null, new object[] { source, lambda });
-            return (IOrderedQueryable<T>)ret;
+            return ret as IOrderedQueryable<T>;
         }
 
         /// <summary>
@@ -102,12 +102,12 @@ namespace XtraSpurt.XRepository
             if (!PropertyExists<T>(propertyName))
                 throw new Exception("The name " + propertyName + " does not match any property");
             var paramterExpression = Expression.Parameter(typeof(T));
-            Expression orderByProperty = Expression.Property(paramterExpression, propertyName);
+            var orderByProperty = Expression.Property(paramterExpression, propertyName);
             var lambda = Expression.Lambda(orderByProperty, paramterExpression);
             var genericMethod = source.Expression.Type == typeof(IOrderedQueryable<T>) ? ThenByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type) : OrderByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
 
             var ret = genericMethod.Invoke(null, new object[] { source, lambda });
-            return (IOrderedQueryable<T>)ret;
+            return ret as IOrderedQueryable<T>;
         }
     }
 }
