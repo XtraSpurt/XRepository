@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace XtraSpurt.XRepository
@@ -11,7 +12,7 @@ namespace XtraSpurt.XRepository
         void SaveChanges();
 
 
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Discards all changes that has not been commited
@@ -21,9 +22,9 @@ namespace XtraSpurt.XRepository
 
         void Dispose();
 
-        Task<TO> UsingTransaction<TO>(Func<TO> function);
+        Task<TO> UsingTransaction<TO>(Func<TO> function, CancellationToken cancellationToken = default);
 
 
-        Task UsingTransaction(Action function);
+        Task UsingTransaction(Action function, CancellationToken cancellationToken = default);
     }
 }
