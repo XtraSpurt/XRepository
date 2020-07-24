@@ -1,2 +1,2 @@
 # XRepository
-Repository Pattern &amp; UnitOfWork Pattern Implementations in DotNet Core 
+Repository Pattern &amp; UnitOfWork Pattern Implementations in DotNet Core  
