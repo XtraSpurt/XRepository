@@ -10,7 +10,7 @@ namespace XRepository.UnitTest
     public class UnitTest1 : IClassFixture<DbFixture>
     {
 
-        private ServiceProvider _serviceProvide;
+        private readonly ServiceProvider _serviceProvide;
 
         public UnitTest1(DbFixture fixture)
         {
