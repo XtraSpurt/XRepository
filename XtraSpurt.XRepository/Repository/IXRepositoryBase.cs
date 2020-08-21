@@ -44,6 +44,7 @@ namespace XtraSpurt.XRepository
             where TProperty : class;
 
         Task<TO> UsingTransactionAsync<TO>(Func<TO> function,CancellationToken cancellationToken = default);
+        Task<TO> UsingTransactionAsync<TO>(Func<Task<TO>> function, CancellationToken cancellationToken = default);
 
         Task UsingTransactionAsync(Action function, CancellationToken cancellationToken = default);
     }

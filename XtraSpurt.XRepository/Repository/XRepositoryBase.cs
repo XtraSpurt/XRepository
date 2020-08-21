@@ -180,5 +180,24 @@ namespace XtraSpurt.XRepository.Repository
                 throw;
             }
         }
+
+        public async Task<TO> UsingTransactionAsync<TO>(Func<Task<TO>> function,
+            CancellationToken cancellationToken = default)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+            try
+            {
+                var result = await function();
+                await _context.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+                return result;
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                _logger.LogError(e, "Unable to Execute Database Transaction ");
+                throw;
+            }
+        }
     }
 }
